@@ -1,0 +1,6 @@
+framework module Pods_PodcastCloneUITests {
+  umbrella header "Pods-PodcastCloneUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
