@@ -8,6 +8,7 @@
 
 import UIKit
 import AVKit
+import MediaPlayer
 
 class PlayerDetailsView: UIView {
     var episode: Episode! {
@@ -41,7 +42,7 @@ class PlayerDetailsView: UIView {
     }()
     
     fileprivate func observePlayerCurrentTime() {
-        let interval = CMTimeMake(1, 2)
+        let interval = CMTimeMake(value: 1, timescale: 2)
         player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] (time) in
             self?.currentTimeLabel.text = time.toDisplayString()
             let durationTime = self?.player.currentItem?.duration
@@ -52,7 +53,7 @@ class PlayerDetailsView: UIView {
     
     fileprivate func updateCurrentTimeSlider() {
         let currentTimeSeconds = CMTimeGetSeconds(player.currentTime())
-        let durationSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTimeMake(1, 1))
+        let durationSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1))
         let percentage = currentTimeSeconds / durationSeconds
         
         self.currentTimeSlider.value = Float(percentage)
@@ -86,13 +87,59 @@ class PlayerDetailsView: UIView {
         }
     }
     
+    // Helps with enabling background audio
+    fileprivate func setupAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)), mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch let sessionErr {
+            print("Failed to activate session:", sessionErr)
+        }
+    }
+    
+    fileprivate func setupRemoteControl() {
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
+            print("Should play podcast...")
+            self.player.play()
+            self.playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            self.miniPlayPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            
+            return .success
+        }
+        
+        
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
+            print("Should pause podcast...")
+            self.player.pause()
+            self.playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            self.miniPlayPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            
+            return .success
+        }
+        
+        commandCenter.togglePlayPauseCommand.isEnabled = true
+        commandCenter.togglePlayPauseCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
+            self.handlePlayPause()
+            
+            return .success
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        setupRemoteControl()
+        setupAudioSession()
         setupGestures()
         observePlayerCurrentTime()
         
-        let time = CMTimeMake(1, 3)
+        let time = CMTimeMake(value: 1, timescale: 3)
         let times = [NSValue(time: time)]
         
         // player has a reference to self and a reference to player
@@ -169,7 +216,7 @@ class PlayerDetailsView: UIView {
         guard let duration = player.currentItem?.duration else { return }
         let durationinSeconds = CMTimeGetSeconds(duration)
         let seekTimeinSeconds = Float64(percentage) * durationinSeconds
-        let seekTime = CMTimeMakeWithSeconds(seekTimeinSeconds, 1)
+        let seekTime = CMTimeMakeWithSeconds(seekTimeinSeconds, preferredTimescale: 1)
         
         player.seek(to: seekTime)
     }
@@ -183,7 +230,7 @@ class PlayerDetailsView: UIView {
     }
     
     fileprivate func seekToCurrentTime(delta: Int64) {
-        let fifteenSeconds = CMTimeMake(delta, 1)
+        let fifteenSeconds = CMTimeMake(value: delta, timescale: 1)
         let seekTime = CMTimeAdd(player.currentTime(), fifteenSeconds)
         
         player.seek(to: seekTime)
@@ -223,4 +270,9 @@ class PlayerDetailsView: UIView {
             shrinkEpisodeImageView()
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+    return input.rawValue
 }

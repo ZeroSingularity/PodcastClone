@@ -328,13 +328,21 @@
 				TargetAttributes = {
 					C5CD3281214FF8780087C59F = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					C5CD3295214FF87A0087C59F = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = C5CD3281214FF8780087C59F;
 					};
 					C5CD32A0214FF87A0087C59F = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = C5CD3281214FF8780087C59F;
 					};
 				};
@@ -671,7 +679,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AppTest.PodcastClone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -690,7 +698,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AppTest.PodcastClone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -711,7 +719,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AppTest.PodcastCloneTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PodcastClone.app/PodcastClone";
 			};
@@ -733,7 +741,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AppTest.PodcastCloneTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PodcastClone.app/PodcastClone";
 			};
@@ -754,7 +762,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AppTest.PodcastCloneUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PodcastClone;
 			};
@@ -775,7 +783,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AppTest.PodcastCloneUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PodcastClone;
 			};
