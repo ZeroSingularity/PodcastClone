@@ -23,6 +23,8 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         
         setupSearchBar()
         setupTableView()
+        
+        searchBar(searchController.searchBar, textDidChange: "Voong")
     }
     
     //MARK:- Setup Work
@@ -35,16 +37,19 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         searchController.searchBar.delegate = self
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            print(1)
-        APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
-            print("Finished searching for podcasts...")
-            self.podcasts = podcasts
-            self.tableView.reloadData()
-        }
-    }
+    var timer: Timer?
     
-   
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(1)
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
+            APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
+                print("Finished searching for podcasts...")
+                self.podcasts = podcasts
+                self.tableView.reloadData()
+            }
+        })
+    }
     
     fileprivate func setupTableView() {
         //.1 register a cell for our tableview
