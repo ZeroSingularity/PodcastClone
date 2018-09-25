@@ -56,6 +56,7 @@ class EpisodesController: UITableViewController {
         let activityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
         activityIndicatorView.color = .darkGray
         activityIndicatorView.startAnimating()
+        
         return activityIndicatorView
     }
     
@@ -66,17 +67,7 @@ class EpisodesController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let episode = self.episodes[indexPath.row]
         let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController
-        mainTabBarController?.maximizePlayerDetails(episode: episode)
-//        print("Trying to play episode", episode.title)
-//
-//        let window = UIApplication.shared.keyWindow
-//        // calling .first reaches the first object in the xib file which is the PlayerDetailsView we can do this because we changed the xibs custom class to PlayerDetailsView
-//        let playerDetailsView = PlayerDetailsView.initFromnNib()
-//
-//        playerDetailsView.episode = episode
-//
-//        playerDetailsView.frame = self.view.frame
-//        window?.addSubview(playerDetailsView)
+        mainTabBarController?.maximizePlayerDetails(episode: episode, playlistEpisodes: self.episodes)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -87,9 +78,6 @@ class EpisodesController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
         let episode = episodes[indexPath.row]
         cell.episode = episode
-        
-//        cell.textLabel?.numberOfLines = 0
-//        cell.textLabel?.text = episode.title! + "\n" + (episode.pubDate?.description)!
         
         return cell
     }
