@@ -15,6 +15,8 @@
 		C52DB4DA215057150062FB78 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52DB4D9215057150062FB78 /* APIService.swift */; };
 		C57B5BF3215932E2007B3DF4 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57B5BF2215932E2007B3DF4 /* UIApplication.swift */; };
 		C57B5BF521593622007B3DF4 /* PlayerDetailsView+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57B5BF421593622007B3DF4 /* PlayerDetailsView+Gestures.swift */; };
+		C5A07562215AA36F00985853 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A07561215AA36F00985853 /* FavoritesController.swift */; };
+		C5A07564215AAFEA00985853 /* FavoritePodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A07563215AAFEA00985853 /* FavoritePodcastCell.swift */; };
 		C5CD3286214FF8780087C59F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CD3285214FF8780087C59F /* AppDelegate.swift */; };
 		C5CD3288214FF8780087C59F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CD3287214FF8780087C59F /* ViewController.swift */; };
 		C5CD328B214FF8790087C59F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5CD3289214FF8790087C59F /* Main.storyboard */; };
@@ -68,6 +70,8 @@
 		C52DB4D9215057150062FB78 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		C57B5BF2215932E2007B3DF4 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		C57B5BF421593622007B3DF4 /* PlayerDetailsView+Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView+Gestures.swift"; sourceTree = "<group>"; };
+		C5A07561215AA36F00985853 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
+		C5A07563215AAFEA00985853 /* FavoritePodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePodcastCell.swift; sourceTree = "<group>"; };
 		C5CD3282214FF8780087C59F /* PodcastClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodcastClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CD3285214FF8780087C59F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5CD3287214FF8780087C59F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 				C5ED04372152A68E00DFA832 /* PlayerDetailsView.xib */,
 				C5ED04392152AB4F00DFA832 /* PlayerDetailsView.swift */,
 				C57B5BF421593622007B3DF4 /* PlayerDetailsView+Gestures.swift */,
+				C5A07563215AAFEA00985853 /* FavoritePodcastCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -181,9 +186,9 @@
 			isa = PBXGroup;
 			children = (
 				C5ED04322151B72500DFA832 /* Extensions */,
-				C52DB4DB215061D10062FB78 /* Views */,
 				C52DB4D8215057010062FB78 /* API */,
 				C5CD32BA215008810087C59F /* Models */,
+				C52DB4DB215061D10062FB78 /* Views */,
 				C5CD32B6215006F60087C59F /* Controllers */,
 				C5CD3285214FF8780087C59F /* AppDelegate.swift */,
 				C5CD3287214FF8780087C59F /* ViewController.swift */,
@@ -219,6 +224,7 @@
 			children = (
 				C5CD32B7215007590087C59F /* PodcastsSearchController.swift */,
 				C5132C3F215174D400B9B2C0 /* EpisodesController.swift */,
+				C5A07561215AA36F00985853 /* FavoritesController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -481,9 +487,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5A07564215AAFEA00985853 /* FavoritePodcastCell.swift in Sources */,
 				C5ED04362151B87600DFA832 /* RSSFeed.swift in Sources */,
 				C5ED043A2152AB4F00DFA832 /* PlayerDetailsView.swift in Sources */,
 				C5CD32B8215007590087C59F /* PodcastsSearchController.swift in Sources */,
+				C5A07562215AA36F00985853 /* FavoritesController.swift in Sources */,
 				C57B5BF3215932E2007B3DF4 /* UIApplication.swift in Sources */,
 				C5ED04342151B75200DFA832 /* String.swift in Sources */,
 				C5ED043C21531D0200DFA832 /* CMTime.swift in Sources */,
