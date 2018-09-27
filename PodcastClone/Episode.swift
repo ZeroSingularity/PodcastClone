@@ -9,7 +9,9 @@
 import Foundation
 import FeedKit
 
-struct Episode {
+// Encodable and Decodable protocols allow JSON encoder and decoder to automatically know how to encode and decode the properties outside of the Model object
+// Using Codable is the combination of Encodable and Decodable
+struct Episode: Codable {
     let title: String
     let author: String
     let pubDate: Date
