@@ -17,6 +17,8 @@ struct Episode: Codable {
     let pubDate: Date
     let description: String
     let streamUrl: String
+    
+    var fileUrl: String?
     var imageUrl: String?
     
     init(feedItem: RSSFeedItem) {
