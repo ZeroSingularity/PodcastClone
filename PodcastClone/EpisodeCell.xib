@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -50,8 +49,18 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0b-OG-RPS">
+                        <rect key="frame" x="28" y="67" width="76.5" height="34.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <size key="shadowOffset" width="0.0" height="1"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="f0b-OG-RPS" firstAttribute="centerX" secondItem="Gav-hn-dUd" secondAttribute="centerX" id="2CB-Fe-UWn"/>
+                    <constraint firstItem="f0b-OG-RPS" firstAttribute="centerY" secondItem="Gav-hn-dUd" secondAttribute="centerY" id="Egq-tD-qt0"/>
                     <constraint firstItem="Gav-hn-dUd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="IdG-Tc-JrQ"/>
                     <constraint firstItem="o3x-BC-bBM" firstAttribute="leading" secondItem="Gav-hn-dUd" secondAttribute="trailing" constant="16" id="J7X-vD-C89"/>
                     <constraint firstItem="Gav-hn-dUd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="MHo-Rl-DrO"/>
@@ -63,6 +72,7 @@
             <connections>
                 <outlet property="descriptionLabel" destination="cJA-kH-F90" id="ac9-L2-sJq"/>
                 <outlet property="episodeImageView" destination="Gav-hn-dUd" id="jNz-5F-u66"/>
+                <outlet property="progressLabel" destination="f0b-OG-RPS" id="wyc-30-oQY"/>
                 <outlet property="pubDateLabel" destination="G4u-9Y-rVs" id="ejm-us-qou"/>
                 <outlet property="titleLabel" destination="PZ7-NZ-mDe" id="uOO-Rw-zGZ"/>
             </connections>

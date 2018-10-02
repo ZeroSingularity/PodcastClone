@@ -196,7 +196,6 @@
 				C5CD32B6215006F60087C59F /* Controllers */,
 				C5CD3285214FF8780087C59F /* AppDelegate.swift */,
 				C5CD3287214FF8780087C59F /* ViewController.swift */,
-				C5CD32B3214FF8E50087C59F /* MainTabBarController.swift */,
 				C5CD3289214FF8790087C59F /* Main.storyboard */,
 				C5CD328C214FF87A0087C59F /* Assets.xcassets */,
 				C5CD328E214FF87A0087C59F /* LaunchScreen.storyboard */,
@@ -230,6 +229,7 @@
 				C5132C3F215174D400B9B2C0 /* EpisodesController.swift */,
 				C5A07561215AA36F00985853 /* FavoritesController.swift */,
 				C5904D5E215C0A40009BDFF9 /* DownloadsController.swift */,
+				C5CD32B3214FF8E50087C59F /* MainTabBarController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
