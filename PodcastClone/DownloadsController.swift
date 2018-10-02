@@ -84,6 +84,13 @@ class DownloadsController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let episode = self.episodes[indexPath.row]
+        episodes.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        UserDefaults.standard.deleteEpisode(episode: episode)
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return episodes.count
     }

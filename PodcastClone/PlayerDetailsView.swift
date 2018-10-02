@@ -30,7 +30,7 @@ class PlayerDetailsView: UIView {
                     return image
                 })
                
-                MPNowPlayingInfoCenter.default().nowPlayingInfo? [MPMediaItemPropertyArtwork] = artworkItem
+                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artworkItem
             }
         }
     }
@@ -136,7 +136,8 @@ class PlayerDetailsView: UIView {
     // Helps with enabling background audio
     fileprivate func setupAudioSession() {
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)), mode: .default)
+            // try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)), mode: .default)
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch let sessionErr {
             print("Failed to activate session:", sessionErr)
@@ -177,6 +178,10 @@ class PlayerDetailsView: UIView {
         
         commandCenter.nextTrackCommand.addTarget(self, action: #selector(handleNextTrack))
         commandCenter.previousTrackCommand.addTarget(self, action: #selector(handlePrevTrack))
+        
+        //MARK:- CommandCenter Scrubbing
+        commandCenter.changePlaybackPositionCommand.isEnabled = true
+        commandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(handleCurrentTimeSliderChange(_:)))
     }
     
     var playlistEpisodes = [Episode]()
@@ -240,10 +245,12 @@ class PlayerDetailsView: UIView {
         }
     }
     
+    // Lockscreen
+    
     fileprivate func setupLockscreenDuration() {
         guard let duration = player.currentItem?.duration else { return }
         let durationSeconds = CMTimeGetSeconds(duration)
-        MPNowPlayingInfoCenter.default().nowPlayingInfo? [MPMediaItemPropertyPlaybackDuration] = durationSeconds
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationSeconds
     }
     
     fileprivate func setupInterruptionObserver() {
@@ -253,9 +260,7 @@ class PlayerDetailsView: UIView {
     // Handles interruptions
     
     @objc fileprivate func handleInterruption(notification: Notification) {
-        
         guard let userInfo = notification.userInfo else { return }
-        
         guard let type = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt else { return }
         
         if type == AVAudioSession.InterruptionType.began.rawValue {
@@ -303,7 +308,7 @@ class PlayerDetailsView: UIView {
     @IBOutlet weak var miniPlayPauseButton: UIButton! {
         didSet {
             miniPlayPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
-            miniPlayPauseButton.imageEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+            miniPlayPauseButton.imageEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
         }
     }
     
@@ -326,15 +331,19 @@ class PlayerDetailsView: UIView {
     fileprivate let shrunkenTransform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     
     fileprivate func enlargeEpisodeImageView() {
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+        self.animateEpisodeArtwork {
             self.episodeImageView.transform = .identity
-        }, completion: nil)
+        }
     }
-    
+
     fileprivate func shrinkEpisodeImageView() {
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+        self.animateEpisodeArtwork {
             self.episodeImageView.transform = self.shrunkenTransform
-        }, completion: nil)
+        }
+    }
+
+    fileprivate func animateEpisodeArtwork(animations: @escaping () -> Void) -> Void {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: animations, completion: nil)
     }
     
     @IBOutlet weak var episodeImageView: UIImageView! {
@@ -353,10 +362,20 @@ class PlayerDetailsView: UIView {
         let durationinSeconds = CMTimeGetSeconds(duration)
         let seekTimeinSeconds = Float64(percentage) * durationinSeconds
         let seekTime = CMTimeMakeWithSeconds(seekTimeinSeconds, preferredTimescale: 1)
+
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = seekTimeinSeconds
         
-        MPNowPlayingInfoCenter.default().nowPlayingInfo? [MPNowPlayingInfoPropertyElapsedPlaybackTime] = seekTimeinSeconds
+        // fixes issue where scrubbing was bugging!
+        if self.currentTimeSlider.isTracking {
+            player.pause()
+        } else {
+            player.play()
+        }
         
         player.seek(to: seekTime)
+        
+        //self.currentTimeSlider.maximumValue = Float(CMTimeGetSeconds(self.player.currentItem?.duration ?? CMTimeMake(value: 0, timescale: 0)))
+        
     }
     
     @IBAction func handleRewind(_ sender: Any) {
@@ -386,6 +405,7 @@ class PlayerDetailsView: UIView {
             titleLabel.numberOfLines = 2
         }
     }
+    
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var playPauseButton: UIButton! {
         didSet {
@@ -396,6 +416,7 @@ class PlayerDetailsView: UIView {
     
     @objc func handlePlayPause() {
         print("Trying to play and pause")
+        
         if player.timeControlStatus == .paused {
             player.play()
             playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)

@@ -24,7 +24,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         setupSearchBar()
         setupTableView()
         
-        searchBar(searchController.searchBar, textDidChange: "Voong")
+        searchBar(searchController.searchBar, textDidChange: "NPR")
     }
     
     //MARK:- Setup Work
@@ -71,10 +71,11 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
+        let darkBlue = UIColor(hexString: "#03738Cff")
         label.text = "Please enter a Search Term"
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        label.textColor = .green
+        label.textColor = darkBlue
         
         return label
     }

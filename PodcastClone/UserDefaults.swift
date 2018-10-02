@@ -12,10 +12,26 @@ extension UserDefaults {
     static let favoritedPodcastKey = "favoritedPodcastKey"
     static let downloadedEpisodesKey = "downloadedEpisodesKey"
     
+    func deleteEpisode(episode: Episode) {
+        let savedEpisodes = downloadedEpisodes()
+        let filteredEpisodes = savedEpisodes.filter { (e) -> Bool in
+            // should use episode.collectionId to be safer with deletes
+            return e.title != episode.title
+        }
+        
+        do {
+            let data = try JSONEncoder().encode(filteredEpisodes)
+            UserDefaults.standard.set(data, forKey: UserDefaults.downloadedEpisodesKey)
+        } catch let encodeErr {
+            print("Failed to encode episode:", encodeErr)
+        }
+    }
+    
     func downloadEpisode(episode: Episode) {
         do {
             var episodes = downloadedEpisodes()
-            episodes.append(episode)
+            // episodes.append(episode)
+            episodes.insert(episode, at: 0)
             let data = try JSONEncoder().encode(episodes)
             UserDefaults.standard.set(data, forKey: UserDefaults.downloadedEpisodesKey)
             

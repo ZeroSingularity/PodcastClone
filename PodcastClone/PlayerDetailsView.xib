@@ -138,7 +138,7 @@
                                 <constraint firstAttribute="height" constant="20" id="gvO-Hl-ilO"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                            <color key="textColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.011764705882352941" green="0.45098039215686275" blue="0.5490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="OyT-mk-p3A">
@@ -252,11 +252,11 @@
     </objects>
     <resources>
         <image name="appicon" width="60" height="60"/>
-        <image name="fastforward15" width="45" height="45"/>
-        <image name="max_volume" width="32" height="32"/>
-        <image name="muted_volume" width="32" height="32"/>
+        <image name="fastforward15" width="45.5" height="45.5"/>
+        <image name="max_volume" width="32.5" height="32.5"/>
+        <image name="muted_volume" width="32.5" height="32.5"/>
         <image name="pause" width="57" height="57"/>
         <image name="play" width="59" height="59"/>
-        <image name="rewind15" width="45" height="45"/>
+        <image name="rewind15" width="45.5" height="45.5"/>
     </resources>
 </document>

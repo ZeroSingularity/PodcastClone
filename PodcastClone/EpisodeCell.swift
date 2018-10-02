@@ -15,7 +15,7 @@ class EpisodeCell: UITableViewCell {
             descriptionLabel.text = episode.description
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM dd, yyyy"
+            dateFormatter.dateFormat = "MMM dd, yyyy"
             pubDateLabel.text = dateFormatter.string(from: episode.pubDate)
             
             let url = URL(string: episode.imageUrl?.tosecureHTTPS() ?? "")

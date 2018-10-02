@@ -14,7 +14,8 @@ class MainTabBarController: UITabBarController {
         
         UINavigationBar.appearance().prefersLargeTitles = true
         
-        tabBar.tintColor = .green
+        let darkBlue = UIColor(hexString: "#03738Cff")
+        tabBar.tintColor = darkBlue
         
         setupViewControllers()
         setupPlayerDetailsView()
@@ -98,8 +99,8 @@ class MainTabBarController: UITabBarController {
     
     fileprivate func generateNavigationController(with rootViewController: UIViewController, title: String, image: UIImage) -> UIViewController {
         let navController = UINavigationController(rootViewController: rootViewController)
-        rootViewController.navigationItem.title = title
         // navController.navigationBar.prefersLargeTitles = true
+        rootViewController.navigationItem.title = title
         navController.tabBarItem.title = title
         navController.tabBarItem.image = image
         
