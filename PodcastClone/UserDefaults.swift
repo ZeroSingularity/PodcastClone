@@ -65,7 +65,7 @@ extension UserDefaults {
     func deletePodcasts(podcast: Podcast) {
         let podcasts = savedPodcasts()
         let filteredPodcasts = podcasts.filter { (p) -> Bool in
-            return p.trackName != podcast.trackName && podcast.artistName != podcast.artistName
+            return p.trackName != podcast.trackName || p.trackName == podcast.trackName && p.artistName != podcast.artistName
         }
         
         let data = NSKeyedArchiver.archivedData(withRootObject: filteredPodcasts)

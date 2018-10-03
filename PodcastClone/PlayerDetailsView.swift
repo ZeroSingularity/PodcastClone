@@ -259,6 +259,27 @@ class PlayerDetailsView: UIView {
     
     // Handles interruptions
     
+    fileprivate func pauseOnHeadphoneDisconnect() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleHeadphoneDisconnect), name: AVAudioSession.routeChangeNotification, object: nil)
+    }
+    
+    @objc fileprivate func handleHeadphoneDisconnect(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+        let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+        let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else { return }
+        
+        switch reason {
+        case .newDeviceAvailable:
+            handlePlayPause()
+        case .oldDeviceUnavailable:
+            player.pause()
+            playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            miniPlayPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            shrinkEpisodeImageView()
+        default: ()
+        }
+    }
+    
     @objc fileprivate func handleInterruption(notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
         guard let type = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt else { return }
@@ -290,6 +311,8 @@ class PlayerDetailsView: UIView {
         
         observePlayerCurrentTime()
         observeBoundaryTime()
+        
+        pauseOnHeadphoneDisconnect()
     }
     
     static func initFromnNib() -> PlayerDetailsView {
@@ -303,12 +326,17 @@ class PlayerDetailsView: UIView {
     //MARK:- IB Action and Outlets
     
     @IBOutlet weak var miniPlayerView: UIView!
-    @IBOutlet weak var miniEpisodeImageView: UIImageView!
+    @IBOutlet weak var miniEpisodeImageView: UIImageView! {
+        didSet {
+            miniEpisodeImageView.layer.cornerRadius = 5
+        }
+    }
+    
     @IBOutlet weak var miniTitleLabel: UILabel!
     @IBOutlet weak var miniPlayPauseButton: UIButton! {
         didSet {
             miniPlayPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
-            miniPlayPauseButton.imageEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
+            miniPlayPauseButton.imageEdgeInsets = .init(top: 12, left: 12, bottom: 12, right: 12)
         }
     }
     
